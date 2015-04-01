@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.codepath.apps.restclienttemplate"
+        applicationId "com.codepath.apps.basictwitter"
         minSdkVersion 16
         targetSdkVersion 21
     }
@@ -21,6 +21,7 @@ android {
 repositories {
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url 'http://clinker.47deg.com/nexus/content/groups/public' }
 }
 
 dependencies {
@@ -32,4 +33,10 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.6'
     // ActiveAndroid for simple persistence with an ORM
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    // Universal image loader
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+    // swipe list view
+    compile ('com.fortysevendeg.swipelistview:swipelistview:1.0-SNAPSHOT@aar') {
+        transitive = true
+    }
 }
