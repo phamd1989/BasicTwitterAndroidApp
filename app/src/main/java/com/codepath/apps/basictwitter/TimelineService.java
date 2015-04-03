@@ -1,5 +1,6 @@
 package com.codepath.apps.basictwitter;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 
 import android.app.IntentService;
@@ -39,10 +40,10 @@ public class TimelineService extends IntentService {
 		TwitterClient client = TwitterApp.getRestClient();
 		if (client.sinceId != 0) {
 			client.refreshHomeTimeline(new JsonHttpResponseHandler() {
-				
-				public void onSuccess(JSONArray json) {
-//					addAll(Tweet.fromJsonArray(json));
-					Log.d("Debug", json.toString());
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
+                    Log.d("Debug", json.toString());
 					int size = Tweet.fromJsonArray(json).size();
 					count = count + size;
 ////					Bundle bundle = new Bundle();
@@ -92,9 +93,10 @@ public class TimelineService extends IntentService {
 			});
 		} else {
 			client.getHomeTimelineList(0, new JsonHttpResponseHandler() {
-				
-				public void onSuccess(JSONArray json) {
-					Log.d("Debug", json.toString());
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
+                    Log.d("Debug", json.toString());
 					int size = Tweet.fromJsonArray(json).size();
 					count = count + size;
 					i.putExtra("size", size);
@@ -133,11 +135,12 @@ public class TimelineService extends IntentService {
 					
 					LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(i);
 				}
-			
-				public void onFailure(Throwable e, String s) {
-					Log.d("debug", e.toString());
-					Log.d("debug", s.toString());
-				}	
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Log.d("debug", throwable.toString());
+
+                }
 			});
 		}
 		

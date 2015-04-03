@@ -2,6 +2,7 @@ package com.codepath.apps.basictwitter.fragment;
 
 import java.util.ArrayList;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 
 import com.activeandroid.util.Log;
@@ -32,15 +33,16 @@ public class MentionTimelineFragment extends TweetsListFragment {
 		}
 		
 		client.getMentionTimelineList(maxId, new JsonHttpResponseHandler() {
-			
-			public void onSuccess(JSONArray json) {
-				addAll(Tweet.fromJsonArray(json));
-			}
-			
-			public void onFailure(Throwable e, String s) {
-				Log.d("debug", e.toString());
-				Log.d("debug", s.toString());
-			}
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                addAll(Tweet.fromJsonArray(response));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("debug", throwable.toString());
+            }
 		});
 	}
 	

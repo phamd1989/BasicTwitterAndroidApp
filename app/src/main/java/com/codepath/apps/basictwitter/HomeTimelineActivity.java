@@ -40,7 +40,7 @@ public class HomeTimelineActivity extends FragmentActivity {
 
 	private void setupTabs() {
 		ActionBar actionBar = getActionBar();
-//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(true);
 
 		Tab tab1 = actionBar

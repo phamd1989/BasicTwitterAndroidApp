@@ -2,6 +2,7 @@ package com.codepath.apps.basictwitter.fragment;
 
 import java.util.ArrayList;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 
 import android.os.Bundle;
@@ -45,15 +46,15 @@ public class UserTimelineFragment extends TweetsListFragment{
 			maxId = aTweets.getItem(aTweets.getCount() - 1).getUid() - 1;
 		}
 		client.getUserTimeline(screenName, maxId, new JsonHttpResponseHandler() {
-			
-			public void onSuccess(JSONArray json) {
-//				aTweets.clear();
-				addAll(Tweet.fromJsonArray(json));
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+				addAll(Tweet.fromJsonArray(response));
 			}
-			
-			public void onFailure(Throwable e, String s) {
-				Log.d("debug", e.toString());
-				Log.d("debug", s.toString());
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+				Log.d("debug", throwable.toString());
 			}
 		});
 	}
